@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/beeth0ven/blog-material-ui#readme",
   "dependencies": {
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

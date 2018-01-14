@@ -6,7 +6,7 @@ import {
   Subheader,
   GridTile
  } from 'material-ui';
-import tilesData from './tilesData.js';
+import {connect} from 'react-redux';
 
 const styles = {
   root: {
@@ -22,19 +22,17 @@ const styles = {
   }
 }
 
-const gridCell = (data) => (
+const gridCell = (article) => (
   <GridTile
-    key={data.title}
-    title={data.title}
-    subtitle={<span>by <b>{data.author}</b></span>}
+    key={article.title}
+    title={article.title}
+    subtitle={<span>by <b>{article.author}</b></span>}
   >
-    <img src={data.img} />
+    <img src={article.img} />
   </GridTile>
 )
 
-const App = () => {
-
-  console.log('App.render.hiaaa');
+const App = ({articles}) => {
 
   return (
     <ThemeProvider>
@@ -46,7 +44,7 @@ const App = () => {
             style= {styles.gridList}
           >
             <Subheader>December</Subheader>
-            {tilesData.map(gridCell)}
+            {articles.map(gridCell)}
           </GridList>
         </div>
       </div>
@@ -54,4 +52,6 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect(
+  (state) => ({...state})
+)(App);
