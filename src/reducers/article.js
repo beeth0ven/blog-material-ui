@@ -1,18 +1,6 @@
 import tilesData from './tilesData.js'
 
-const startLoading = () => ({
-  type: 'START_LOADING'
-});
 
-const loadSuccess = (data) => ({
-  type: 'LOAD_SUCCESS',
-  data
-});
-
-const loadFailed = (error) => ({
-  type: 'LOAD_FAILED',
-  error
-});
 
 const empty = {
   isLoading: false,
@@ -21,7 +9,6 @@ const empty = {
 };
 
 const article = (state = empty, action) => {
-  console.log('article action:', action);
   switch (action.type) {
     case 'START_LOADING':
       return {
@@ -46,4 +33,4 @@ const article = (state = empty, action) => {
   }
 }
 
-export default article;
+export { article };

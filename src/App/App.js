@@ -7,6 +7,7 @@ import {
   GridTile
  } from 'material-ui';
 import {connect} from 'react-redux';
+import {startLoading} from '../actions/article.js';
 
 const styles = {
   root: {
@@ -17,7 +18,7 @@ const styles = {
   },
   gridList: {
     width: 500,
-    height: 450,
+    // height: 450,
     overflowY: 'auto',
   }
 }
@@ -32,26 +33,38 @@ const gridCell = (article) => (
   </GridTile>
 )
 
-const App = ({articles}) => {
+class App extends Component {
 
-  return (
-    <ThemeProvider>
-      <div>
-        <AppBar title="Beeth0ven's blog"/>
-        <div style={styles.root}>
-          <GridList
-            cellHeight={180}
-            style= {styles.gridList}
-          >
-            <Subheader>December</Subheader>
-            {articles.map(gridCell)}
-          </GridList>
+  componentDidMount() {
+    const { startLoading } = this.props;
+    startLoading()
+  }
+
+  render() {
+
+    const { articles } = this.props;
+
+    return (
+      <ThemeProvider>
+        <div>
+          <AppBar title="Beeth0ven's blog"/>
+          <div style={styles.root}>
+            <GridList
+              cellHeight={180}
+              style= {styles.gridList}
+            >
+              <Subheader>December</Subheader>
+              {articles.map(gridCell)}
+            </GridList>
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
-  );
-};
+      </ThemeProvider>
+    );
+
+  }
+}
 
 export default connect(
-  (state) => ({...state})
+  (state) => ({...state}),
+  {startLoading}
 )(App);
