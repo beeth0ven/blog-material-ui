@@ -7,7 +7,7 @@ import {
   GridTile
  } from 'material-ui';
 import {connect} from 'react-redux';
-import {startLoading} from '../actions/article.js';
+import {getArticles} from '../actions/article.js';
 
 const styles = {
   root: {
@@ -36,8 +36,19 @@ const gridCell = (article) => (
 class App extends Component {
 
   componentDidMount() {
-    const { startLoading } = this.props;
-    startLoading()
+    const { fetchArticle } = this.props;
+    fetchArticle()
+  }
+
+  subheader = () => {
+    const { isLoading, error } = this.props;
+    if (isLoading) {
+      return 'Loading...';
+    }
+    if (error) {
+      return `${error}`;
+    }
+    return 'December';
   }
 
   render() {
@@ -53,7 +64,7 @@ class App extends Component {
               cellHeight={180}
               style= {styles.gridList}
             >
-              <Subheader>December</Subheader>
+              <Subheader>{this.subheader()}</Subheader>
               {articles.map(gridCell)}
             </GridList>
           </div>
@@ -66,5 +77,7 @@ class App extends Component {
 
 export default connect(
   (state) => ({...state}),
-  {startLoading}
+  (dispatch) => ({
+    fetchArticle: () => getArticles(dispatch)
+  })
 )(App);

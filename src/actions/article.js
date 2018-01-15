@@ -1,3 +1,5 @@
+import tilesData from '../../tilesData.js'
+
 const startLoading = () => ({
   type: 'START_LOADING'
 });
@@ -12,4 +14,9 @@ const loadFailed = (error) => ({
   error
 });
 
-export { startLoading, loadSuccess, loadFailed };
+const getArticles = (dispatch) => {
+  dispatch(startLoading());
+  setTimeout(() => dispatch(loadSuccess(tilesData)), 2000)
+};
+
+export { startLoading, loadSuccess, loadFailed, getArticles };

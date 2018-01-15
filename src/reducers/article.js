@@ -1,10 +1,7 @@
-import tilesData from './tilesData.js'
-
-
 
 const empty = {
   isLoading: false,
-  articles: tilesData,
+  articles: [],
   error: null
 };
 
