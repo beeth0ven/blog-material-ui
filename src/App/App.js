@@ -4,7 +4,8 @@ import {
   AppBar,
   GridList,
   Subheader,
-  GridTile
+  GridTile,
+  RefreshIndicator
  } from 'material-ui';
 import {connect} from 'react-redux';
 import {getArticles} from '../actions/article.js';
@@ -20,6 +21,10 @@ const styles = {
     width: 500,
     // height: 450,
     overflowY: 'auto',
+  },
+  refreshIndicator: {
+    display: 'inline-block',
+    position: 'relative'
   }
 }
 
@@ -41,37 +46,51 @@ class App extends Component {
   }
 
   subheader = () => {
-    const { isLoading, error } = this.props;
-    if (isLoading) {
-      return 'Loading...';
-    }
+    const { error } = this.props;
     if (error) {
-      return `${error}`;
+      return <Subheader>`${error}`</Subheader>;
     }
-    return 'December';
+    return <Subheader>December</Subheader>;
+  }
+
+  articlesJSX = () => {
+    const { isLoading, articles } = this.props;
+    if (isLoading) {
+
+      return (
+        <RefreshIndicator
+          size={40}
+          left={230}
+          top={300}
+          status='loading'
+          style={styles.refreshIndicator}
+        />
+      );
+    }
+
+    return (
+      <GridList
+        cellHeight={180}
+        style= {styles.gridList}
+      >
+        {this.subheader()}
+        {articles.map(gridCell)}
+      </GridList>
+    )
   }
 
   render() {
-
-    const { articles } = this.props;
 
     return (
       <ThemeProvider>
         <div>
           <AppBar title="Beeth0ven's blog"/>
           <div style={styles.root}>
-            <GridList
-              cellHeight={180}
-              style= {styles.gridList}
-            >
-              <Subheader>{this.subheader()}</Subheader>
-              {articles.map(gridCell)}
-            </GridList>
+            {this.articlesJSX()}
           </div>
         </div>
       </ThemeProvider>
     );
-
   }
 }
 
