@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ThemeProvider from './ThemeProvider.js'
 import {
   AppBar,
   GridList,
@@ -8,7 +7,7 @@ import {
   RefreshIndicator
  } from 'material-ui';
 import {connect} from 'react-redux';
-import {getArticles} from '../actions/article.js';
+import {startLoading} from '../actions/article.js';
 
 const styles = {
   root: {
@@ -41,14 +40,14 @@ const gridCell = (article) => (
 class App extends Component {
 
   componentDidMount() {
-    const { fetchArticle } = this.props;
-    fetchArticle()
+    const { startLoading } = this.props;
+    startLoading()
   }
 
   subheader = () => {
     const { error } = this.props;
     if (error) {
-      return <Subheader>`${error}`</Subheader>;
+      return <Subheader>{`${error}`}</Subheader>;
     }
     return <Subheader>December</Subheader>;
   }
@@ -82,14 +81,12 @@ class App extends Component {
   render() {
 
     return (
-      <ThemeProvider>
         <div>
           <AppBar title="Beeth0ven's blog"/>
           <div style={styles.root}>
             {this.articlesJSX()}
           </div>
         </div>
-      </ThemeProvider>
     );
   }
 }
@@ -97,6 +94,6 @@ class App extends Component {
 export default connect(
   (state) => ({...state}),
   (dispatch) => ({
-    fetchArticle: () => getArticles(dispatch)
+    startLoading: () => dispatch(startLoading())
   })
 )(App);

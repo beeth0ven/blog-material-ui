@@ -1,3 +1,4 @@
+import _ from 'rxjs';
 import tilesData from '../../tilesData.js'
 
 const startLoading = () => ({
@@ -14,9 +15,9 @@ const loadFailed = (error) => ({
   error
 });
 
-const getArticles = (dispatch) => {
-  dispatch(startLoading());
-  setTimeout(() => dispatch(loadSuccess(tilesData)), 2000)
-};
+const getArticlesEpic = (action$, store) =>
+  action$.ofType('START_LOADING')
+    .delay(2000)
+    .map(() => loadSuccess(tilesData));
 
-export { startLoading, loadSuccess, loadFailed, getArticles };
+export { startLoading, loadSuccess, loadFailed, getArticlesEpic };
