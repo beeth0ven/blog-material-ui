@@ -4,10 +4,11 @@ import {
   GridList,
   Subheader,
   GridTile,
-  RefreshIndicator
+  RefreshIndicator,
+  FlatButton
  } from 'material-ui';
 import {connect} from 'react-redux';
-import {startLoading} from '../actions/article.js';
+import {getArticles} from '../actions/article.js';
 
 const styles = {
   root: {
@@ -40,8 +41,8 @@ const gridCell = (article) => (
 class App extends Component {
 
   componentDidMount() {
-    const { startLoading } = this.props;
-    startLoading()
+    // const { getArticles } = this.props;
+    // getArticles()
   }
 
   subheader = () => {
@@ -83,6 +84,11 @@ class App extends Component {
     return (
         <div>
           <AppBar title="Beeth0ven's blog"/>
+          <FlatButton
+            label='Refresh'
+            primary={true}
+            onClick={this.props.getArticles}
+          />
           <div style={styles.root}>
             {this.articlesJSX()}
           </div>
@@ -94,6 +100,6 @@ class App extends Component {
 export default connect(
   (state) => ({...state}),
   (dispatch) => ({
-    startLoading: () => dispatch(startLoading())
+    getArticles: () => dispatch(getArticles())
   })
 )(App);

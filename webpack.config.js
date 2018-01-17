@@ -1,7 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/App/index.js',
+  entry: [
+    'babel-polyfill',
+    './src/App/index.js'
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js'

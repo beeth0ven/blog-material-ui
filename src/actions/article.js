@@ -1,4 +1,3 @@
-import _ from 'rxjs';
 import tilesData from '../../tilesData.js'
 
 const startLoading = () => ({
@@ -15,9 +14,23 @@ const loadFailed = (error) => ({
   error
 });
 
-const getArticlesEpic = (action$, store) =>
-  action$.ofType('START_LOADING')
-    .delay(2000)
-    .map(() => loadSuccess(tilesData));
+const loadTilesDate = () => new Promise((resolve, reject) =>
+  setTimeout(() => resolve(tilesData), 2000)
+  // setTimeout(() => reject(new Error('auth error!')), 2000)
+);
 
-export { startLoading, loadSuccess, loadFailed, getArticlesEpic };
+const shouldLoadArticles = (state) => !state.isLoading;
+
+const getArticles = () => async (dispatch, getState) => {
+    if (shouldLoadArticles(getState())) {
+      dispatch(startLoading());
+      try {
+        const data = await loadTilesDate();
+        dispatch(loadSuccess(data))
+      } catch (error) {
+        dispatch(loadFailed(error));
+      }
+    };
+};
+
+export { startLoading, loadSuccess, loadFailed, getArticles };
