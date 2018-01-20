@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store, { history } from './store.js'
+import store from './store.js';
+import history from './history.js';
 import { Provider } from 'react-redux';
 import ThemeProvider from './ThemeProvider.js';
 import Routes from '../routes';

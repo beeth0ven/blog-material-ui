@@ -4,7 +4,8 @@ import {
   Drawer,
   MenuItem,
  } from 'material-ui';
-import { Link } from 'react-router';
+ import { showArticles, showSearch, showMe } from '../actions/router.js';
+ import { connect } from 'react-redux';
 
 class CoreLayout extends Component {
 
@@ -18,8 +19,13 @@ class CoreLayout extends Component {
   onRequestChange = (open) => this.setState({open});
   onCloseDrawer = () => this.setState({open: false});
   onToggleDrawer = () => this.setState({open: !this.state.open});
+  onMenuItemClick = (routerAction) => () => {
+    this.onCloseDrawer();
+    routerAction();
+  };
 
   render() {
+    const { showArticles, showSearch, showMe } = this.props;
 
     return (
         <div>
@@ -34,19 +40,20 @@ class CoreLayout extends Component {
             open={this.state.open}
             onRequestChange={this.onRequestChange}
           >
-            <Link to='/'>
-              <MenuItem onClick={this.onCloseDrawer}>Articles</MenuItem>
-            </Link>
-            <Link to='/search'>
-              <MenuItem onClick={this.onCloseDrawer}>Search</MenuItem>
-            </Link>
-            <Link to='/me'>
-              <MenuItem onClick={this.onCloseDrawer}>Me</MenuItem>
-            </Link>
+          <MenuItem onClick={this.onMenuItemClick(showArticles)}>Articles</MenuItem>
+          <MenuItem onClick={this.onMenuItemClick(showSearch)}>Search</MenuItem>
+          <MenuItem onClick={this.onMenuItemClick(showMe)}>Me</MenuItem>
           </Drawer>
         </div>
     );
   }
 }
 
-export default CoreLayout;
+export default connect(
+  (state) => ({}),
+  (dispatch) => ({
+    showArticles: () => dispatch(showArticles()),
+    showSearch: () => dispatch(showSearch()),
+    showMe: () => dispatch(showMe()),
+  })
+)(CoreLayout);
