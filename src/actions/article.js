@@ -19,7 +19,7 @@ const loadTilesDate = () => new Promise((resolve, reject) =>
   // setTimeout(() => reject(new Error('auth error!')), 2000)
 );
 
-const shouldLoadArticles = (state) => !state.isLoading;
+const shouldLoadArticles = (state) => !state.article.isLoading;
 
 const getArticles = () => async (dispatch, getState) => {
     if (shouldLoadArticles(getState())) {
